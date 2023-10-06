@@ -14,6 +14,7 @@ services:
       - LDAP_READONLY_USER_PASSWORD=changethistoo
       - LDAP_TLS_VERIFY_CLIENT=try
     hostname: "ldap-master"
+    domainname: "example.org"
 
     volumes:
       - ./directory.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/directory.ldif
@@ -29,7 +30,6 @@ services:
       - PHPLDAPADMIN_LDAP_HOSTS=openldap
     networks:
       - opensearch-net
-    domainname: "example.org"
     
 volumes:
   opensearch-ldap-data1:
