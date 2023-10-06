@@ -1,0 +1,38 @@
+version: '3'
+services:
+
+  openldap:
+    image: osixia/openldap
+    container_name: openldap
+    command: --copy-service # seemingly required to load directory.ldif
+    ports:
+      - 389:389
+      - 636:636
+    environment:
+      - LDAP_ADMIN_PASSWORD=changethis
+      - LDAP_READONLY_USER=true
+      - LDAP_READONLY_USER_PASSWORD=changethistoo
+      - LDAP_TLS_VERIFY_CLIENT=try
+    hostname: "ldap-master"
+
+    volumes:
+      - ./directory.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/directory.ldif
+    networks:
+      - opensearch-net
+
+  openldap-admin:
+    image: osixia/phpldapadmin
+    container_name: openldap-admin
+    ports:
+      - 6443:443
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=openldap
+    networks:
+      - opensearch-net
+    domainname: "example.org"
+    
+volumes:
+  opensearch-ldap-data1:
+
+networks:
+  opensearch-net:
