@@ -13,7 +13,7 @@ Login DN
 cn=admin,dc=example,dc=org
 
 Password
-password
+changethis
 ``` 
 
 - Update the `config.yml` file of the Wazuh indexer with details of the LDAP server
